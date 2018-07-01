@@ -27,8 +27,22 @@ class BankAccount                                   # When naming class we use C
         return balance                              # return the balance
     end
 
-    def to_s                                                                # Override the print method output
-        "Name: #{name}, Balance: #{sprintf("%0.2f", balance)}"              # Format to 2 floating point
+    def to_s                                                                                                # Override the print method output
+        "Name: #{name}, Balance: #{sprintf("%0.2f", balance)}"                                              # Format to 2 floating point
+        puts "-" * 40                                                                                       # Add 40 spaces by multiplying                  
+    end 
+
+    def print_register                                                                                      # Create method to print register
+        puts "#{name}'s Bank account"                                                                       # Print Owner of bank account
+        puts "Description".ljust(30) + "Amount".rjust(10)                                                   # Print description and amount using ljust() and rjust() to align, total 40 spaces
+        
+        @transactions.each do |transaction|
+            puts transaction[:description].ljust(30) + sprintf("%0.2f", transaction[:amount]).rjust(10)     # Loop through the @transactions array. Use ljust(), rjust() to align the print total 40 spaces
+        end
+
+        puts "-" * 40
+        puts "Balance:".ljust(30) + sprintf("%0.2f", balance).rjust(10)                                     # Return the remaning balance
+        puts "-" * 40
     end
 
 end
@@ -36,6 +50,7 @@ end
 bank_account = BankAccount.new("Jason")             # Instantiate new instance of BankAccount class
 bank_account.credit("Paycheck, 100", 100)           # Debit the amount   
 bank_account.debit("Groceries", 40)                 # Credit the amount
+bank_account.debit("Gas", 10.51)                    # Debit the amount
 
-
-puts bank_account
+puts "Register:"
+bank_account.print_register
